@@ -42,7 +42,7 @@ const Register = () => {
 
         <div className='flex flex-col w-full gap-1 mb-3'>
             <label htmlFor="email">Email</label>
-            <input onChange={inputHandle} value={state.email} className='px-3 py-2 outline-none border border-slate-400 bg-transparent rounded-md' type="text" name='email' placeholder='Email' id='email' required />
+            <input onChange={inputHandle} value={state.email} className='px-3 py-2 outline-none border border-slate-400 bg-transparent rounded-md' type="email" name='email' placeholder='Email' id='email' required />
 
         </div>
 
