@@ -1,6 +1,8 @@
 import React, { useState } from 'react'; 
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
+import { FaE } from 'react-icons/fa6';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 const Category = () => {
 
@@ -36,12 +38,19 @@ const Category = () => {
         <tbody>
             {
                 [1,2,3,4,5].map((d, i) => <tr key={i}>
-                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>#34344</td>
-                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>$454</td>
-                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>Pending</td>
+                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{d}</td>
+                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
+                    <img className='w-[45px] h-[45px]' src={`http://localhost:3000/images/category/${d}.jpg`} alt="" />
+                </td>
+                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>Tshirt</td>
                  
-                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>
-                    <Link>View</Link> </td>
+                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
+                    <div className='flex justify-start items-center gap-4'>
+                    <Link className='p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50'> <FaEdit/> </Link> 
+                    <Link className='p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50'> <FaTrash/> </Link> 
+                    </div>
+                    
+                    </td>
             </tr> )
             }
 
