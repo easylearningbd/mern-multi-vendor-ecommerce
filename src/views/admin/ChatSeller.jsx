@@ -81,21 +81,27 @@ const ChatSeller = () => {
 
             <div onClick={()=> setShow(!show)} className='w-[35px] flex md:hidden h-[35px] rounded-sm bg-blue-500 shadow-lg hover:shadow-blue-500/50 justify-center cursor-pointer items-center text-white'>
                 <span><FaList/> </span>
-            </div>
-
-
+            </div> 
         </div>
 
-    </div>
+        <div className='py-4'>
+            <div className='bg-[#475569] h-[calc(100vh-290px)] rounded-md p-3 overflow-y-auto'>
 
-
-
-
-
-
-
+            </div> 
         </div>
-            
+
+        <form className='flex gap-3'>
+            <input className='w-full flex justify-between px-2 border border-slate-700 items-center py-[5px] focus:border-blue-500 rounded-md outline-none bg-transparent text-[#d0d2d6]' type="text" placeholder='Input Your Message' />
+            <button className='shadow-lg bg-[#06b6d4] hover:shadow-cyan-500/50 text-semibold w-[75px] h-[35px] rounded-md text-white flex justify-center items-center'>Send</button>
+
+        </form>
+
+
+
+
+    </div>  
+
+        </div> 
 
         </div>
         
