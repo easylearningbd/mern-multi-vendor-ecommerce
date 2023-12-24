@@ -16,32 +16,38 @@ export const sellerRoutes = [
     {
         path: '/seller/dashboard',
         element : <SellerDashboard/>,
-        ability : ['seller']
+        role : 'seller',
+        status : 'active'
     },
     {
         path: '/seller/dashboard/add-product',
         element : <AddProduct/>,
-        ability : ['seller']
+        role : 'seller',
+        status : 'active'
     },
     {
         path: '/seller/dashboard/products',
         element : <Products/>,
-        ability : ['seller']
+        role : 'seller',
+        status : 'active'
     },
     {
         path: '/seller/dashboard/discount-product',
         element : <DiscountProducts/>,
-        ability : ['seller']
+        role : 'seller',
+        status : 'active'
     },
     {
         path: '/seller/dashboard/orders',
         element : <Orders/>,
-        ability : ['seller']
+        role : 'seller',
+        ability : ['active','deactive']
     },
     {
         path: '/seller/dashboard/payments',
         element : <Payments/>,
-        ability : ['seller']
+        role : 'seller',
+        status : 'active'
     }
 
 ]
