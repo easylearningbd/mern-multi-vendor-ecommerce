@@ -1,4 +1,4 @@
-import { lazy } from "react";           
+import { lazy } from "react";            
 const Home = lazy(()=> import('../../views/Home'))   
 const SellerDashboard = lazy(()=> import('../../views/seller/SellerDashboard'))   
 const AddProduct = lazy(()=> import('../../views/seller/AddProduct'))   
@@ -9,6 +9,7 @@ const Payments = lazy(()=> import('../../views/seller/Payments'))
 const SellerToAdmin = lazy(()=> import('../../views/seller/SellerToAdmin'))
 const SellerToCustomer = lazy(()=> import('../../views/seller/SellerToCustomer'))
 const Profile = lazy(()=> import('../../views/seller/Profile'))
+const EditProduct = lazy(()=> import('../../views/seller/EditProduct'))
 
 export const sellerRoutes = [
     {
@@ -25,6 +26,12 @@ export const sellerRoutes = [
     {
         path: '/seller/dashboard/add-product',
         element : <AddProduct/>,
+        role : 'seller',
+        status : 'active'
+    },
+    {
+        path: '/seller/dashboard/edit-product/:productId',
+        element : <EditProduct/>,
         role : 'seller',
         status : 'active'
     },
