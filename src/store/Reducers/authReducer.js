@@ -18,6 +18,23 @@ export const admin_login = createAsyncThunk(
 )
 
 
+export const seller_login = createAsyncThunk(
+    'auth/seller_login',
+    async(info,{rejectWithValue, fulfillWithValue}) => {
+         console.log(info)
+        try {
+            const {data} = await api.post('/seller-login',info,{withCredentials: true})
+            localStorage.setItem('accessToken',data.token)
+            // console.log(data)
+            return fulfillWithValue(data)
+        } catch (error) {
+            // console.log(error.response.data)
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+
+
 export const seller_register = createAsyncThunk(
     'auth/seller_register',
     async(info,{rejectWithValue, fulfillWithValue}) => { 

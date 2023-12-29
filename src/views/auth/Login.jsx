@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Link} from 'react-router-dom'
 import { FaGoogle } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
+import { PropagateLoader } from 'react-spinners';
+import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { overrideStyle } from '../../utils/utils';
+import { seller_login,messageClear } from '../../store/Reducers/authReducer';
 
 const Login = () => {
+
+    const dispatch = useDispatch()
+    const {loader,errorMessage,successMessage} = useSelector(state=>state.auth)
 
     const [state, setState] = useState({ 
         email: "",
@@ -19,8 +27,23 @@ const Login = () => {
 
     const submit = (e) => {
         e.preventDefault()
-        console.log(state)
+        dispatch(seller_login(state))
     }
+
+    useEffect(() => {
+
+        if (successMessage) {
+            toast.success(successMessage)
+            dispatch(messageClear())  
+        }
+        if (errorMessage) {
+            toast.error(errorMessage)
+            dispatch(messageClear())
+        }
+        
+
+    },[successMessage,errorMessage])
+
 
     return (
         <div className='min-w-screen min-h-screen bg-[#cdcae9] flex justify-center items-center' >
@@ -41,9 +64,13 @@ const Login = () => {
             <label htmlFor="password">Password</label>
             <input onChange={inputHandle} value={state.password}  className='px-3 py-2 outline-none border border-slate-400 bg-transparent rounded-md' type="password" name='password' placeholder='Password' id='password' required />
         </div>
- 
+  
 
-        <button className='bg-slate-800 w-full hover:shadow-blue-300/ hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'>Sing In</button>
+        <button disabled={loader ? true : false}  className='bg-slate-800 w-full hover:shadow-blue-300/ hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'>
+            {
+               loader ? <PropagateLoader color='#fff' cssOverride={overrideStyle} /> : 'Sing In'
+            } 
+            </button>
 
         <div className='flex items-center mb-3 gap-3 justify-center'>
             <p>Don't Have an account ? <Link className='font-bold' to="/register">Sing Up</Link> </p> 
