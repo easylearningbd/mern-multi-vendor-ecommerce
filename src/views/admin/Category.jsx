@@ -11,6 +11,26 @@ const Category = () => {
     const [searchValue, setSearchValue] = useState('')
     const [parPage, setParPage] = useState(5)
     const [show, setShow] =  useState(false)
+    const [imageShow, setImage] = useState('')
+
+    const [state, setState] = useState({
+
+        name: '',
+        image: ''
+
+    })
+
+
+    const imageHandle = (e) => {
+        let files = e.target.files 
+        if (files.length > 0) {
+            setImage(URL.createObjectURL(files[0]))
+            setState({
+                ...state,
+                image: files[0]
+            })
+        }
+    }
 
 
     return (
@@ -105,15 +125,20 @@ const Category = () => {
             <form>
                 <div className='flex flex-col w-full gap-1 mb-3'>
                     <label htmlFor="name"> Category Name</label>
-                    <input className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#ffffff] border border-slate-700 rounded-md text-[#000000]' type="text" id='name' name='category_name' placeholder='Category Name' />
+                    <input value={state.name} onChange={(e)=>setState({...state,name : e.target.value})} className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#ffffff] border border-slate-700 rounded-md text-[#000000]' type="text" id='name' name='category_name' placeholder='Category Name' />
                  </div>
 
                  <div>
                     <label className='flex justify-center items-center flex-col h-[238px] cursor-pointer border border-dashed hover:border-red-500 w-full border-[#d0d2d6]'  htmlFor="image">
+                        {
+                          imageShow ? <img className='w-full h-full' src={imageShow} /> : <>
                         <span><FaImage/> </span>
                         <span>Select Image</span> 
+                          </>
+                        }
+                        
                     </label>
-                    <input className='hidden' type="file" name="image" id="image" />
+                    <input onChange={imageHandle} className='hidden' type="file" name="image" id="image" />
             <div>
                 <button className='bg-red-500 w-full hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2 my-2'>Add Category</button>
 
