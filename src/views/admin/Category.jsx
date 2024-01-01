@@ -15,7 +15,7 @@ import Search from '../components/Search';
 const Category = () => {
 
     const dispatch = useDispatch()
-    const {loader,successMessage,errorMessage} = useSelector(state=> state.category)
+    const {loader,successMessage,errorMessage,categorys} = useSelector(state=> state.category)
 
 
 
@@ -112,12 +112,12 @@ const Category = () => {
 
         <tbody>
             {
-                [1,2,3,4,5].map((d, i) => <tr key={i}>
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{d}</td>
+                categorys.map((d, i) => <tr key={i}>
+                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{i+1}</td>
                 <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
-                    <img className='w-[45px] h-[45px]' src={`http://localhost:3000/images/category/${d}.jpg`} alt="" />
+                    <img className='w-[45px] h-[45px]' src={d.image} alt="" />
                 </td>
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>Tshirt</td>
+                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{d.name}</td>
                  
                 <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
                     <div className='flex justify-start items-center gap-4'>
