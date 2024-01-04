@@ -5,7 +5,7 @@ import Pagination from '../Pagination';
 import { FaEdit, FaEye, FaTrash } from 'react-icons/fa'; 
 
 const Products = () => {
-
+ 
     const [currentPage, setCurrentPage] = useState(1)
     const [searchValue, setSearchValue] = useState('')
     const [parPage, setParPage] = useState(5)
