@@ -20,7 +20,7 @@ export const categoryAdd = createAsyncThunk(
 )
 
 // End Method 
-
+ 
 export const get_category = createAsyncThunk(
     'category/get_category',
     async({ parPage,page,searchValue },{rejectWithValue, fulfillWithValue}) => {
