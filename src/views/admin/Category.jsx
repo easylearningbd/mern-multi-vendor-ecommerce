@@ -185,7 +185,7 @@ const Category = () => {
             {
                loader ? <PropagateLoader color='#fff' cssOverride={overrideStyle} /> : 'Add Category'
             } 
-            </button>
+            </button> 
 
             </div>
 
