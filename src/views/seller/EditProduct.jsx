@@ -12,6 +12,7 @@ const EditProduct = () => {
 
     const dispatch = useDispatch()
     const { categorys } = useSelector(state => state.category)
+    const { product } = useSelector(state => state.product)
     
     useEffect(() => {
         dispatch(get_category({
@@ -26,32 +27,7 @@ const EditProduct = () => {
     }, [productId])
 
 
-    // const categorys = [
-    //     {
-    //         id: 1,
-    //         name : 'Sports'
-    //     },
-    //     {
-    //         id: 2,
-    //         name : 'Tshirt'
-    //     },
-    //     {
-    //         id: 3,
-    //         name : 'Mobile'
-    //     },
-    //     {
-    //         id: 4,
-    //         name : 'Computer'
-    //     },
-    //     {
-    //         id: 5,
-    //         name : 'Watch'
-    //     },
-    //     {
-    //         id: 6,
-    //         name : 'Pant'
-    //     },
-    // ]
+     
 
     const [state, setState] = useState({
         name: "",
@@ -104,21 +80,16 @@ const EditProduct = () => {
 
     useEffect(() => {
         setState({
-            name: "Mens tshirt",
-            description: 'Utilities for controlling how',
-            discount: 5,
-            price: 255,
-            brand: "Easy",
-            stock: 10 
+            name: product.name,
+            description: product.description,
+            discount: product.discount,
+            price: product.price,
+            brand: product.brand,
+            stock: product.stock
         })
-        setCategory('Tshirt')
-        setImageShow([
-            'http://localhost:3000/images/admin.jpg',
-            'http://localhost:3000/images/demo.jpg',
-            'http://localhost:3000/images/seller.png'
-            
-        ])
-    },[])
+        setCategory(product.category)
+        setImageShow( product.images)
+    },[product])
  
     return (
         <div className='px-2 lg:px-7 pt-5'>
