@@ -63,8 +63,7 @@ export const productReducer = createSlice({
         }) 
         .addCase(add_product.fulfilled, (state, { payload }) => {
             state.loader = false;
-            state.successMessage = payload.message
-            state.products = [...state.products, payload.category]
+            state.successMessage = payload.message 
              
         })
 
