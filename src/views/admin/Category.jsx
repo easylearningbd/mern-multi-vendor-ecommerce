@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
 import { FaE } from 'react-icons/fa6';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { FaImage } from "react-icons/fa";
+import { FaImage } from "react-icons/fa"; 
 import { IoMdCloseCircle } from "react-icons/io";
 import { PropagateLoader } from 'react-spinners';
 import { overrideStyle } from '../../utils/utils';
