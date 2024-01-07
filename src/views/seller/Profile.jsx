@@ -2,12 +2,23 @@ import React from 'react';
 import { FaImages } from "react-icons/fa6";
 import { FadeLoader } from 'react-spinners';
 import { FaRegEdit } from "react-icons/fa";
+import { useDispatch, useSelector } from 'react-redux';
 
 const Profile = () => {
+
+    const dispatch = useDispatch()
+    const { userInfo } = useSelector(state => state.auth)
+
     const image = true 
     const loader = true
-    const status = 'active'
-    const userInfo = true
+    const status = 'active' 
+
+    const add_image = (e) => {
+        if (e.target.files.length > 0) {
+            console.log(e.target.files[0])
+        }
+
+    }
 
     return (
         <div className='px-2 lg:px-7 py-5'>
@@ -16,7 +27,7 @@ const Profile = () => {
         <div className='w-full p-4 bg-[#6a5fdf] rounded-md text-[#d0d2d6]'>
             <div className='flex justify-center items-center py-3'>
                 {
-                    image ? <label htmlFor="img" className='h-[150px] w-[200px] relative p-3 cursor-pointer overflow-hidden'>
+                    image?.image ? <label htmlFor="img" className='h-[150px] w-[200px] relative p-3 cursor-pointer overflow-hidden'>
                         <img src="http://localhost:3000/images/demo.jpg" alt="" />
                         {
                         !loader && <div className='bg-slate-600 absolute left-0 top-0 w-full h-full opacity-70 flex justify-center items-center z-20'>
@@ -42,7 +53,7 @@ const Profile = () => {
 
                 </label>
                 }
-                <input type="file" className='hidden' id='img' /> 
+                <input onChange={add_image} type="file" className='hidden' id='img' /> 
             </div>
 
         <div className='px-0 md:px-5 py-2'>
@@ -50,25 +61,25 @@ const Profile = () => {
                 <span className='p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50 absolute right-2 top-2 cursor-pointer'><FaRegEdit /> </span>
                 <div className='flex gap-2'>
                     <span>Name : </span>
-                    <span>Ariyan Khan</span> 
+                    <span>{userInfo.name}</span> 
                 </div>
                 <div className='flex gap-2'>
                     <span>Email : </span>
-                    <span>ariyan@gmail.com</span> 
+                    <span>{userInfo.email}</span> 
                 </div>
                 <div className='flex gap-2'>
                     <span>Role : </span>
-                    <span>Seller</span> 
+                    <span>{userInfo.role}</span> 
                 </div>
                 <div className='flex gap-2'>
                     <span>Status : </span>
-                    <span>Active</span> 
+                    <span>{userInfo.status}</span> 
                 </div>
                 <div className='flex gap-2'>
                     <span>Payment Account : </span>
                      <p>
                         {
-                            status === 'active' ? <span className='bg-green-500 text-white text-xs cursor-pointer font-normal ml-2 px-2 py-0.5 rounded'>Pending</span> : <span className='bg-blue-500 text-white text-xs cursor-pointer font-normal ml-2 px-2 py-0.5 rounded'>Click Active</span>
+                            status === 'active' ? <span className='bg-red-500 text-white text-xs cursor-pointer font-normal ml-2 px-2 py-0.5 rounded'>{userInfo.payment}</span> : <span className='bg-blue-500 text-white text-xs cursor-pointer font-normal ml-2 px-2 py-0.5 rounded'>Click Active</span>
                         }
                      </p>
                 </div> 
@@ -78,7 +89,7 @@ const Profile = () => {
 
         <div className='px-0 md:px-5 py-2'>
             {
-                !userInfo ? <form>
+                !userInfo?.shopInfo ? <form>
                     <div className='flex flex-col w-full gap-1 mb-2'>
                 <label htmlFor="Shop">Shop Name</label>
                 <input className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]' type="text" name='shopName' id='Shop' placeholder='Shop Name' />
@@ -150,7 +161,7 @@ const Profile = () => {
                 <label htmlFor="o_password">Old Password</label>
                 <input className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]' type="password" name='old_password' id='o_password' placeholder='Old Password' />
             </div>  
-
+ 
             <div className='flex flex-col w-full gap-1 mb-2'>
                 <label htmlFor="n_password">New Password</label>
                 <input className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]' type="password" name='new_password' id='n_password' placeholder='New Password' />

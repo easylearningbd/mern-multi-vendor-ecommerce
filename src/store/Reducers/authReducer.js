@@ -119,7 +119,7 @@ export const authReducer = createSlice({
 
         .addCase(seller_login.pending, (state, { payload }) => {
             state.loader = true;
-        })
+        }) 
         .addCase(seller_login.rejected, (state, { payload }) => {
             state.loader = false;
             state.errorMessage = payload.error
