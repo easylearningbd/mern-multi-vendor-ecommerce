@@ -10,7 +10,7 @@ export const get_seller_request = createAsyncThunk(
         try {
              
             const {data} = await api.get(`/request-seller-get?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`,{withCredentials: true}) 
-            // console.log(data)
+             console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
             // console.log(error.response.data)
@@ -39,13 +39,13 @@ export const sellerReducer = createSlice({
 
     },
     extraReducers: (builder) => {
-        // builder
+        builder
           
-        // .addCase(get_category.fulfilled, (state, { payload }) => {
-        //     state.totalCategory = payload.totalCategory;
-        //     state.categorys = payload.categorys;
+        .addCase(get_seller_request.fulfilled, (state, { payload }) => {
+            state.sellers = payload.sellers;
+            state.totalSeller = payload.totalSeller;
              
-        // })
+        })
  
 
     }
