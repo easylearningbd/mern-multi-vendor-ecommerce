@@ -1,6 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { get_seller } from '../../store/Reducers/sellerReducer';
 
 const SellerDetails = () => {
+
+    const dispatch = useDispatch()
+    const {seller} = useSelector(state=> state.seller)
+    const { sellerId } = useParams()
+
+    useEffect(() => {
+        dispatch(get_seller(sellerId))
+
+    },[sellerId])
+
     return (
         <div className='px-2 lg:px-7 pt-5'>
       <h1 className='text-[20px] font-bold mb-3'>  Seller Details </h1>
