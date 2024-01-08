@@ -1,18 +1,42 @@
 import React, { useEffect, useState } from 'react'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { get_seller } from '../../store/Reducers/sellerReducer';
+import { get_seller,seller_status_update,messageClear } from '../../store/Reducers/sellerReducer';
+import toast from 'react-hot-toast';
 
 const SellerDetails = () => {
 
     const dispatch = useDispatch()
-    const {seller} = useSelector(state=> state.seller)
+    const {seller,successMessage} = useSelector(state=> state.seller)
     const { sellerId } = useParams()
 
     useEffect(() => {
         dispatch(get_seller(sellerId))
 
     },[sellerId])
+
+    const [status, setStatus] =  useState('')
+    const submit = (e) => {
+        e.preventDefault()
+        dispatch(seller_status_update({
+            sellerId,
+            status
+        })) 
+    }
+
+
+    useEffect(() => { 
+        if (successMessage) {
+            toast.success(successMessage)
+            dispatch(messageClear())  
+        } 
+    },[successMessage])
+
+    useEffect(() => { 
+        if (seller) { 
+            setStatus(seller.status)
+        } 
+    },[seller])
 
     return (
         <div className='px-2 lg:px-7 pt-5'>
@@ -97,9 +121,9 @@ const SellerDetails = () => {
 
 
         <div> 
-            <form>
+            <form onSubmit={submit} >
                 <div className='flex gap-4 py-3'>
-                    <select className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]' name="" id="">
+                    <select value={status} onChange={(e)=>setStatus(e.target.value)} className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]' name="" id="" required>
                         <option value="">--Select Status--</option>
                         <option value="active">Active</option>
                         <option value="deactive">Deactive</option>
