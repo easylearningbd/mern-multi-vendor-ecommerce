@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { FaList } from 'react-icons/fa6';
 import { IoMdClose } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
-import { get_customers } from '../../store/Reducers/chatReducer';
-import { Link } from 'react-router-dom';
+import { get_customer_message, get_customers } from '../../store/Reducers/chatReducer';
+import { Link, useParams } from 'react-router-dom';
 
 const SellerToCustomer = () => {
 
@@ -12,12 +12,19 @@ const SellerToCustomer = () => {
     const {userInfo } = useSelector(state => state.auth)
     const {customers } = useSelector(state => state.chat)
 
+    const { customerId } =  useParams()
 
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(get_customers(userInfo._id))
     },[])
+
+    useEffect(() => {
+        if (customerId) {
+            dispatch(get_customer_message(customerId))
+        }
+    },[customerId])
 
     return (
     <div className='px-2 lg:px-7 py-5'>
