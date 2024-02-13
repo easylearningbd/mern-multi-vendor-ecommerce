@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaList } from 'react-icons/fa6';
 import { IoMdClose } from "react-icons/io";
+import { useDispatch, useSelector } from 'react-redux';
+import { get_customers } from '../../store/Reducers/chatReducer';
 
 const SellerToCustomer = () => {
 
     const [show, setShow] = useState(false) 
     const sellerId = 65
+    const {userInfo } = useSelector(state => state.auth)
+
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(get_customers(userInfo._id))
+    },[])
 
     return (
     <div className='px-2 lg:px-7 py-5'>
@@ -78,7 +88,7 @@ const SellerToCustomer = () => {
         <h2 className='text-base text-white font-semibold'>Kazi</h2>
 
                 </div>
-            }
+            } 
 
             <div onClick={()=> setShow(!show)} className='w-[35px] flex md:hidden h-[35px] rounded-sm bg-blue-500 shadow-lg hover:shadow-blue-500/50 justify-center cursor-pointer items-center text-white'>
                 <span><FaList/> </span>
