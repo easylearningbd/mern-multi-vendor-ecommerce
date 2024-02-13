@@ -42,14 +42,11 @@ export const chatReducer = createSlice({
 
     },
     extraReducers: (builder) => {
-        // builder
+        builder
        
-        // .addCase(admin_login.fulfilled, (state, { payload }) => {
-        //     state.loader = false;
-        //     state.successMessage = payload.message
-        //     state.token = payload.token
-        //     state.role = returnRole(payload.token)
-        // }) 
+        .addCase(get_customers.fulfilled, (state, { payload }) => { 
+            state.customers = payload.customers 
+        }) 
  
     }
 
