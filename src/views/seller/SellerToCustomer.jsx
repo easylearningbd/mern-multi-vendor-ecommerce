@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { FaList } from 'react-icons/fa6';
 import { IoMdClose } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
-import { get_customer_message, get_customers,send_message } from '../../store/Reducers/chatReducer';
+import { get_customer_message, get_customers,messageClear,send_message } from '../../store/Reducers/chatReducer';
 import { Link, useParams } from 'react-router-dom';
+import { socket } from '../../utils/utils';
 
 const SellerToCustomer = () => {
 
     const [show, setShow] = useState(false) 
     const sellerId = 65
     const {userInfo } = useSelector(state => state.auth)
-    const {customers,messages,currentCustomer } = useSelector(state => state.chat)
+    const {customers,messages,currentCustomer,successMessage } = useSelector(state => state.chat)
     const [text,setText] = useState('')
 
     const { customerId } =  useParams()
@@ -37,6 +38,13 @@ const SellerToCustomer = () => {
             }))
             setText('') 
     }
+
+    useEffect(() => {
+        if (successMessage) {
+            socket.emit('send_seller_message',messages[messages.length - 1])
+            dispatch(messageClear())
+        }
+    },[successMessage])
 
 
     return (
