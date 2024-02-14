@@ -83,6 +83,19 @@ export const chatReducer = createSlice({
             state.messages = payload.messages 
             state.currentCustomer = payload.currentCustomer 
         }) 
+        .addCase(send_message.fulfilled, (state, { payload }) => { 
+            let tempFriends = state.customers
+            let index = tempFriends.findIndex(f => f.fdId === payload.message.receverId)
+            while (index > 0) {
+                let temp = tempFriends[index]
+                tempFriends[index] = tempFriends[index - 1]
+                tempFriends[index - 1] = temp
+                index--
+            }            
+            state.customers = tempFriends;
+            state.messages = [...state.messages, payload.message];
+            state.successMessage = 'Message Send Success';
+        })
  
     }
 
