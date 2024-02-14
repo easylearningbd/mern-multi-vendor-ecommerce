@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { FaList } from 'react-icons/fa6';
 import { IoMdClose } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
-import { get_customer_message, get_customers,messageClear,send_message } from '../../store/Reducers/chatReducer';
+import { get_customer_message, get_customers,messageClear,send_message,updateMessage } from '../../store/Reducers/chatReducer';
 import { Link, useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
+
 import { socket } from '../../utils/utils';
 
 const SellerToCustomer = () => {
@@ -13,6 +15,7 @@ const SellerToCustomer = () => {
     const {userInfo } = useSelector(state => state.auth)
     const {customers,messages,currentCustomer,successMessage } = useSelector(state => state.chat)
     const [text,setText] = useState('')
+    const [receverMessage,setReceverMessage] = useState('')
 
     const { customerId } =  useParams()
 
@@ -45,6 +48,25 @@ const SellerToCustomer = () => {
             dispatch(messageClear())
         }
     },[successMessage])
+
+    useEffect(() => {
+        socket.on('customer_message', msg => {
+            setReceverMessage(msg)
+        })
+         
+    },[])
+
+    useEffect(() => {
+        if (receverMessage) {
+            if (customerId === receverMessage.senderId && userInfo._id === receverMessage.receverId) {
+                dispatch(updateMessage(receverMessage))
+            } else {
+                toast.success(receverMessage.senderName + " " + "Send A message")
+                dispatch(messageClear())
+            }
+        }
+
+    },[receverMessage])
 
 
     return (
