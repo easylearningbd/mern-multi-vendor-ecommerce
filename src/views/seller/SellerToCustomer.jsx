@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FaList } from 'react-icons/fa6';
 import { IoMdClose } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
-import { get_customer_message, get_customers } from '../../store/Reducers/chatReducer';
+import { get_customer_message, get_customers,send_message } from '../../store/Reducers/chatReducer';
 import { Link, useParams } from 'react-router-dom';
 
 const SellerToCustomer = () => {
@@ -11,6 +11,7 @@ const SellerToCustomer = () => {
     const sellerId = 65
     const {userInfo } = useSelector(state => state.auth)
     const {customers,messages,currentCustomer } = useSelector(state => state.chat)
+    const [text,setText] = useState('')
 
     const { customerId } =  useParams()
 
@@ -25,6 +26,18 @@ const SellerToCustomer = () => {
             dispatch(get_customer_message(customerId))
         }
     },[customerId])
+
+    const send = (e) => {
+        e.preventDefault() 
+            dispatch(send_message({
+                senderId: userInfo._id, 
+                receverId: customerId,
+                text,
+                name: userInfo?.shopInfo?.shopName 
+            }))
+            setText('') 
+    }
+
 
     return (
     <div className='px-2 lg:px-7 py-5'>
@@ -130,8 +143,8 @@ const SellerToCustomer = () => {
             </div> 
         </div>
 
-        <form className='flex gap-3'>
-            <input className='w-full flex justify-between px-2 border border-slate-700 items-center py-[5px] focus:border-blue-500 rounded-md outline-none bg-transparent text-[#d0d2d6]' type="text" placeholder='Input Your Message' />
+        <form onSubmit={send} className='flex gap-3'>
+            <input value={text} onChange={(e) => setText(e.target.value)} className='w-full flex justify-between px-2 border border-slate-700 items-center py-[5px] focus:border-blue-500 rounded-md outline-none bg-transparent text-[#d0d2d6]' type="text" placeholder='Input Your Message' />
             <button className='shadow-lg bg-[#06b6d4] hover:shadow-cyan-500/50 text-semibold w-[75px] h-[35px] rounded-md text-white flex justify-center items-center'>Send</button>
 
         </form>
