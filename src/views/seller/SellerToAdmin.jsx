@@ -1,9 +1,31 @@
-import React, { useState } from 'react';
- 
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { get_admin_message, get_seller_message, get_sellers, send_message_seller_admin } from '../../store/Reducers/chatReducer'
 
 const SellerToAdmin = () => {
- 
 
+    const dispatch = useDispatch()
+    const [text,setText] = useState('')
+    const {sellers,activeSeller,seller_admin_message,currentSeller} = useSelector(state => state.chat)
+
+    const {userInfo} = useSelector(state => state.auth)
+
+    useEffect(() => {
+        dispatch(get_seller_message())
+    },[])
+
+    const send = (e) => {
+        e.preventDefault() 
+            dispatch(send_message_seller_admin({
+                senderId: userInfo._id, 
+                receverId: '',
+                message: text,
+                senderName: userInfo.name
+            }))
+            setText('') 
+    }
+ 
+ 
     return (
     <div className='px-2 lg:px-7 py-5'>
         <div className='w-full bg-[#6a5fdf] px-4 py-4 rounded-md h-[calc(100vh-140px)]'>
@@ -66,8 +88,8 @@ const SellerToAdmin = () => {
             </div> 
         </div>
 
-        <form className='flex gap-3'>
-            <input className='w-full flex justify-between px-2 border border-slate-700 items-center py-[5px] focus:border-blue-500 rounded-md outline-none bg-transparent text-[#d0d2d6]' type="text" placeholder='Input Your Message' />
+        <form onSubmit={send}  className='flex gap-3'>
+            <input value={text} onChange={(e) => setText(e.target.value)}  className='w-full flex justify-between px-2 border border-slate-700 items-center py-[5px] focus:border-blue-500 rounded-md outline-none bg-transparent text-[#d0d2d6]' type="text" placeholder='Input Your Message' />
             <button className='shadow-lg bg-[#06b6d4] hover:shadow-cyan-500/50 text-semibold w-[75px] h-[35px] rounded-md text-white flex justify-center items-center'>Send</button>
 
         </form>

@@ -94,6 +94,22 @@ export const get_admin_message = createAsyncThunk(
 )
 // End Method 
 
+
+export const get_seller_message = createAsyncThunk(
+    'chat/get_seller_message',
+    async(receverId,{rejectWithValue, fulfillWithValue}) => {
+        
+        try {
+            const {data} = await api.get(`/chat/get-seller-messages`, {withCredentials: true}) 
+            // console.log(data)
+            return fulfillWithValue(data)
+        } catch (error) { 
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+// End Method 
+
  
  
 export const chatReducer = createSlice({
