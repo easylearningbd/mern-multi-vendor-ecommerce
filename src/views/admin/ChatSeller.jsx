@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaList } from 'react-icons/fa6';
 import { IoMdClose } from "react-icons/io";
-
+import { useDispatch } from 'react-redux';
+import { get_sellers } from '../../store/Reducers/chatReducer'
 const ChatSeller = () => {
 
     const [show, setShow] = useState(false) 
     const sellerId = 65
+
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(get_sellers())
+    })
 
     return (
     <div className='px-2 lg:px-7 py-5'>
