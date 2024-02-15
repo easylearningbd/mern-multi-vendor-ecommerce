@@ -12,7 +12,7 @@ const ChatSeller = () => {
     const { sellerId } = useParams()
     const [text,setText] = useState('')
 
-    const {sellers,activeSeller,seller_admin_message} = useSelector(state => state.chat)
+    const {sellers,activeSeller,seller_admin_message,currentSeller} = useSelector(state => state.chat)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -50,7 +50,7 @@ const ChatSeller = () => {
        </div>
 
         {
-            sellers.map((s,i) => <Link key={i} to={`/admin/dashboard/chat-sellers/${s._id}`} className={`h-[60px] flex justify-start gap-2 items-center text-white px-2 py-2 rounded-md cursor-pointer bg-[#8288ed] `}>
+            sellers.map((s,i) => <Link key={i} to={`/admin/dashboard/chat-sellers/${s._id}`} className={`h-[60px] flex justify-start gap-2 items-center text-white px-2 py-2 rounded-md cursor-pointer ${sellerId === s._id ? 'bg-[#8288ed]' : ''}  `}>
             <div className='relative'>
              <img className='w-[38px] h-[38px] border-white border-2 max-w-[38px] p-[2px] rounded-full' src={s.image} alt="" />
              
@@ -81,11 +81,12 @@ const ChatSeller = () => {
             {
                 sellerId && <div className='flex justify-start items-center gap-3'>
            <div className='relative'>
-         <img className='w-[45px] h-[45px] border-green-500 border-2 max-w-[45px] p-[2px] rounded-full' src="http://localhost:3000/images/demo.jpg" alt="" />
+         <img className='w-[45px] h-[45px] border-green-500 border-2 max-w-[45px] p-[2px] rounded-full' src={currentSeller?.image}  alt="" />
          <div className='w-[10px] h-[10px] bg-green-500 rounded-full absolute right-0 bottom-0'></div>
         </div>
-
+                       <span className='text-white'>{currentSeller?.name}</span>
                 </div>
+
             }
 
             <div onClick={()=> setShow(!show)} className='w-[35px] flex md:hidden h-[35px] rounded-sm bg-blue-500 shadow-lg hover:shadow-blue-500/50 justify-center cursor-pointer items-center text-white'>
@@ -103,7 +104,7 @@ const ChatSeller = () => {
         <div className='w-full flex justify-start items-center'>
                         <div className='flex justify-start items-start gap-2 md:px-3 py-2 max-w-full lg:max-w-[85%]'>
                             <div>
-                                <img className='w-[38px] h-[38px] border-2 border-white rounded-full max-w-[38px] p-[3px]' src="http://localhost:3000/images/demo.jpg" alt="" />
+                                <img className='w-[38px] h-[38px] border-2 border-white rounded-full max-w-[38px] p-[3px]' src="http://localhost:3001/images/demo.jpg" alt="" />
                             </div>
                             <div className='flex justify-center items-start flex-col w-full bg-blue-500 shadow-lg shadow-blue-500/50 text-white py-1 px-2 rounded-sm'>
                             <span>{m.message} </span>
@@ -120,7 +121,7 @@ const ChatSeller = () => {
                         <span>{m.message} </span>
                         </div> 
                         <div>
-                            <img className='w-[38px] h-[38px] border-2 border-white rounded-full max-w-[38px] p-[3px]' src="http://localhost:3000/images/admin.jpg" alt="" />
+                            <img className='w-[38px] h-[38px] border-2 border-white rounded-full max-w-[38px] p-[3px]' src="http://localhost:3001/images/admin.jpg" alt="" />
                         </div>
 
                     </div> 
