@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FaList } from 'react-icons/fa6';
 import { IoMdClose } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
-import { get_sellers, send_message_seller_admin } from '../../store/Reducers/chatReducer'
+import { get_admin_message, get_sellers, send_message_seller_admin } from '../../store/Reducers/chatReducer'
 import { Link, useParams } from 'react-router-dom';
 import { FaRegFaceGrinHearts } from "react-icons/fa6";
  
@@ -29,6 +29,12 @@ const ChatSeller = () => {
             }))
             setText('') 
     }
+
+    useEffect(() => {
+        if (sellerId) {
+            dispatch(get_admin_message(sellerId))
+        }
+    },[sellerId])
 
 
     return (
