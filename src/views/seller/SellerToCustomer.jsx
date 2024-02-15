@@ -43,7 +43,7 @@ const SellerToCustomer = () => {
             }))
             setText('') 
     }
-
+ 
     useEffect(() => {
         if (successMessage) {
             socket.emit('send_seller_message',messages[messages.length - 1])
