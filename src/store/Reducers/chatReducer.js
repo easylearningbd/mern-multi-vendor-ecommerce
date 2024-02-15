@@ -62,6 +62,22 @@ export const get_sellers = createAsyncThunk(
 )
 // End Method 
 
+
+export const send_message_seller_admin = createAsyncThunk(
+    'chat/send_message_seller_admin',
+    async(info,{rejectWithValue, fulfillWithValue}) => {
+        
+        try {
+            const {data} = await api.post(`/chat/message-send-seller-admin`, info, {withCredentials: true}) 
+            // console.log(data)
+            return fulfillWithValue(data)
+        } catch (error) { 
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+// End Method 
+
  
  
 export const chatReducer = createSlice({
