@@ -146,6 +146,9 @@ export const chatReducer = createSlice({
         updateAdminMessage: (state, {payload}) => {
             state.seller_admin_message = [...state.seller_admin_message, payload]
         },
+        updateSellerMessage: (state, {payload}) => {
+            state.seller_admin_message = [...state.seller_admin_message, payload]
+        },
 
     },
     extraReducers: (builder) => {
@@ -191,5 +194,5 @@ export const chatReducer = createSlice({
     }
 
 })
-export const {messageClear,updateMessage,updateSellers,updateCustomer,updateAdminMessage} = chatReducer.actions
+export const {messageClear,updateMessage,updateSellers,updateCustomer,updateAdminMessage,updateSellerMessage} = chatReducer.actions
 export default chatReducer.reducer
