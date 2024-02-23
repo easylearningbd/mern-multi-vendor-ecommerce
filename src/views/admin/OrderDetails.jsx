@@ -1,6 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { get_admin_order } from '../../store/Reducers/OrderReducer';
 
 const OrderDetails = () => {
+
+    const { orderId } = useParams() 
+    const dispatch = useDispatch() 
+    
+    useEffect(() => {
+        dispatch(get_admin_order(orderId))
+    },[orderId])
+
+
     return (
         <div className='px-2 lg:px-7 pt-5'>
         <div className='w-full p-4 bg-[#6a5fdf] rounded-md'>
