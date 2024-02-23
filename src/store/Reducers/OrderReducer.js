@@ -36,12 +36,12 @@ export const OrderReducer = createSlice({
 
     },
     extraReducers: (builder) => {
-        // builder
+        builder
           
-        // .addCase(get_seller_request.fulfilled, (state, { payload }) => {
-        //     state.sellers = payload.sellers;
-        //     state.totalSeller = payload.totalSeller; 
-        // })
+        .addCase(get_admin_orders.fulfilled, (state, { payload }) => {
+            state.myOrders = payload.orders;
+            state.totalOrder = payload.totalOrder; 
+        })
         
  
 

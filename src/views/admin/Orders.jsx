@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { LuArrowDownSquare } from "react-icons/lu";
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { get_admin_orders } from '../../store/Reducers/OrderReducer';
 
 const Orders = () => {
@@ -13,6 +13,8 @@ const Orders = () => {
     const [searchValue, setSearchValue] = useState('')
     const [parPage, setParPage] = useState(5)
     const [show, setShow] =  useState(false)
+
+    const {myOrders,totalOrder } = useSelector(state => state.order)
 
     useEffect(() => {
         const obj = {
@@ -52,152 +54,55 @@ const Orders = () => {
             </div> 
                 </div>
 
+        {
+            myOrders.map((o,i) =>  <div className='text-[#d0d2d6] '>
+            <div className=' flex justify-between items-start border-b border-slate-700'>
+         <div className='py-3 w-[25%] font-medium whitespace-nowrap'>#{o._id}</div>
+                <div className='py-3 w-[13%] font-medium'>${o.price}</div>
+                <div className='py-3 w-[18%] font-medium'>{o.payment_status}</div>
+                <div className='py-3 w-[18%] font-medium'>{o.delivery_status}</div>
+                <div className='py-3 w-[18%] font-medium'>
+                    <Link to={`/admin/dashboard/order/details/${o._id}`} >View</Link>
+                     </div>
+                <div onClick={(e) => setShow(o._id)} className='py-3 w-[8%] font-medium'><LuArrowDownSquare />
+            </div> 
+            </div> 
+            
+            
+              <div className={show === o._id ? 'block border-b border-slate-700 bg-[#8288ed]' : 'hidden'}>
+                   
+            {
+                o.suborder.map((so, i) =>  <div className=' flex justify-start items-start border-b border-slate-700'>
+                <div className='py-3 w-[25%] font-medium whitespace-nowrap pl-3'>#{so._id}</div>
+                <div className='py-3 w-[13%] font-medium'>${so.price}</div>
+                <div className='py-3 w-[18%] font-medium'>{so.payment_status}</div>
+                <div className='py-3 w-[18%] font-medium'>{so.delivery_status}</div> 
+            </div>)
+            }
+             
+                    </div>  
+                </div> )
+        }
 
- <div className='text-[#d0d2d6] '>
-<div className=' flex justify-between items-start border-b border-slate-700'>
-    <div className='py-3 w-[25%] font-medium whitespace-nowrap'>#34343</div>
-    <div className='py-3 w-[13%] font-medium'>$654</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div>
-    <div className='py-3 w-[18%] font-medium'>
-        <Link to='/admin/dashboard/order/details/3' >View</Link>
-         </div>
-    <div onClick={(e) => setShow(!show)} className='py-3 w-[8%] font-medium'><LuArrowDownSquare />
-</div> 
-</div> 
-
-
-  <div className={show ? 'block border-b border-slate-700 bg-[#8288ed]' : 'hidden'}>
-        <div className=' flex justify-start items-start border-b border-slate-700'>
-    <div className='py-3 w-[25%] font-medium whitespace-nowrap pl-3'>#3434</div>
-    <div className='py-3 w-[13%] font-medium'>$56</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div> 
-</div> 
-
-<div className=' flex justify-start items-start border-b border-slate-700'>
-    <div className='py-3 w-[25%] font-medium whitespace-nowrap pl-3'>#3434</div>
-    <div className='py-3 w-[13%] font-medium'>$56</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div> 
-</div>  
-        </div>  
-    </div> 
-
-
-    <div className='text-[#d0d2d6] '>
-<div className=' flex justify-between items-start border-b border-slate-700'>
-    <div className='py-3 w-[25%] font-medium whitespace-nowrap'>#34343</div>
-    <div className='py-3 w-[13%] font-medium'>$654</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div>
-    <div className='py-3 w-[18%] font-medium'>
-        <Link>View</Link>
-         </div>
-    <div onClick={(e) => setShow(!show)} className='py-3 w-[8%] font-medium'><LuArrowDownSquare />
-</div> 
-</div> 
-
-
-  <div className={show ? 'block border-b border-slate-700 bg-[#8288ed]' : 'hidden'}>
-        <div className=' flex justify-start items-start border-b border-slate-700'>
-    <div className='py-3 w-[25%] font-medium whitespace-nowrap pl-3'>#3434</div>
-    <div className='py-3 w-[13%] font-medium'>$56</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div> 
-</div> 
-
-<div className=' flex justify-start items-start border-b border-slate-700'>
-    <div className='py-3 w-[25%] font-medium whitespace-nowrap pl-3'>#3434</div>
-    <div className='py-3 w-[13%] font-medium'>$56</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div> 
-</div>  
-        </div>  
-    </div> 
-
-
-
-
-    <div className='text-[#d0d2d6] '>
-<div className=' flex justify-between items-start border-b border-slate-700'>
-    <div className='py-3 w-[25%] font-medium whitespace-nowrap'>#34343</div>
-    <div className='py-3 w-[13%] font-medium'>$654</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div>
-    <div className='py-3 w-[18%] font-medium'>
-        <Link>View</Link>
-         </div>
-    <div onClick={(e) => setShow(!show)} className='py-3 w-[8%] font-medium'><LuArrowDownSquare />
-</div> 
-</div> 
-
-
-  <div className={show ? 'block border-b border-slate-700 bg-[#8288ed]' : 'hidden'}>
-        <div className=' flex justify-start items-start border-b border-slate-700'>
-    <div className='py-3 w-[25%] font-medium whitespace-nowrap pl-3'>#3434</div>
-    <div className='py-3 w-[13%] font-medium'>$56</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div> 
-</div> 
-
-<div className=' flex justify-start items-start border-b border-slate-700'>
-    <div className='py-3 w-[25%] font-medium whitespace-nowrap pl-3'>#3434</div>
-    <div className='py-3 w-[13%] font-medium'>$56</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div> 
-</div>  
-        </div>  
-    </div> 
-
-
-
-
-    <div className='text-[#d0d2d6] '>
-<div className=' flex justify-between items-start border-b border-slate-700'>
-    <div className='py-3 w-[25%] font-medium whitespace-nowrap'>#34343</div>
-    <div className='py-3 w-[13%] font-medium'>$654</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div>
-    <div className='py-3 w-[18%] font-medium'>
-        <Link>View</Link>
-         </div>
-    <div onClick={(e) => setShow(!show)} className='py-3 w-[8%] font-medium'><LuArrowDownSquare />
-</div> 
-</div> 
-
-
-  <div className={show ? 'block border-b border-slate-700 bg-[#8288ed]' : 'hidden'}>
-        <div className=' flex justify-start items-start border-b border-slate-700'>
-    <div className='py-3 w-[25%] font-medium whitespace-nowrap pl-3'>#3434</div>
-    <div className='py-3 w-[13%] font-medium'>$56</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div> 
-</div> 
-
-<div className=' flex justify-start items-start border-b border-slate-700'>
-    <div className='py-3 w-[25%] font-medium whitespace-nowrap pl-3'>#3434</div>
-    <div className='py-3 w-[13%] font-medium'>$56</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div>
-    <div className='py-3 w-[18%] font-medium'>Pending</div> 
-</div>  
-        </div>  
-    </div> 
-
+ 
+ 
  
 
             </div> 
         </div>
 
-        <div className='w-full flex justify-end mt-4 bottom-4 right-4'>
-        <Pagination 
-            pageNumber = {currentPage}
-            setPageNumber = {setCurrentPage}
-            totalItem = {50}
-            parPage = {parPage}
-            showItem = {3}
-        />
-        </div>
+            {
+                totalOrder <= parPage ? "" : <div className='w-full flex justify-end mt-4 bottom-4 right-4'>
+                <Pagination 
+                    pageNumber = {currentPage}
+                    setPageNumber = {setCurrentPage}
+                    totalItem = {totalOrder}
+                    parPage = {parPage}
+                    showItem = {4}
+                />
+                </div>
+            }
+                    
 
 
 
