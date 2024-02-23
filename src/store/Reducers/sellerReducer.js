@@ -110,6 +110,10 @@ export const sellerReducer = createSlice({
             state.seller = payload.seller; 
             state.successMessage = payload.message; 
         })
+        .addCase(get_active_sellers.fulfilled, (state, { payload }) => {
+            state.sellers = payload.sellers; 
+            state.totalSeller = payload.totalSeller; 
+        })
  
 
     }
