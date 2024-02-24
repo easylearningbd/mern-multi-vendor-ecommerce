@@ -166,6 +166,18 @@ export const sellerReducer = createSlice({
             state.sellers = payload.sellers; 
             state.totalSeller = payload.totalSeller; 
         })
+
+        .addCase(active_stripe_connect_account.pending, (state, { payload }) => {
+            state.loader = true;  
+        })
+        .addCase(active_stripe_connect_account.rejected, (state, { payload }) => {
+            state.loader = false; 
+            state.errorMessage = payload.message; 
+        })
+        .addCase(active_stripe_connect_account.fulfilled, (state, { payload }) => {
+            state.loader = false; 
+            state.successMessage = payload.message; 
+        })
  
 
     }
