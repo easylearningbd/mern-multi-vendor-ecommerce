@@ -1,24 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { admin_order_status_update, get_admin_order } from '../../store/Reducers/OrderReducer';
+import { admin_order_status_update, get_admin_order,messageClear} from '../../store/Reducers/OrderReducer';
+import toast from 'react-hot-toast';
 
 const OrderDetails = () => {
 
     const { orderId } = useParams() 
     const dispatch = useDispatch() 
     const [status, setStatus] = useState('')
+    const { order,errorMessage,successMessage } = useSelector(state => state.order)
+    
+    useEffect(() => {
+        setStatus(order?.delivery_status)
+    },[order])
 
     useEffect(() => {
         dispatch(get_admin_order(orderId))
     },[orderId])
 
-    const { order } = useSelector(state => state.order)
+   
 
     const status_update = (e) => {
         dispatch(admin_order_status_update({orderId, info: {status: e.target.value} }))
         setStatus(e.target.value)
     }
+
+    useEffect(() => { 
+        if (successMessage) {
+            toast.success(successMessage)
+            dispatch(messageClear())  
+        } 
+        if (errorMessage) {
+            toast.error(errorMessage)
+            dispatch(messageClear())  
+        } 
+    },[successMessage,errorMessage])
 
     return (
         <div className='px-2 lg:px-7 pt-5'>

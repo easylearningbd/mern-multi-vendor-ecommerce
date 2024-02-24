@@ -71,6 +71,12 @@ export const OrderReducer = createSlice({
         .addCase(get_admin_order.fulfilled, (state, { payload }) => {
             state.order = payload.order; 
         })
+        .addCase(admin_order_status_update.rejected, (state, { payload }) => {
+            state.errorMessage = payload.message; 
+        })
+        .addCase(admin_order_status_update.fulfilled, (state, { payload }) => {
+            state.successMessage = payload.message; 
+        })
         
  
 
