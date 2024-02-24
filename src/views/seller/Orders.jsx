@@ -44,22 +44,24 @@ const Orders = () => {
             <th scope='col' className='py-3 px-4'>Price</th>
             <th scope='col' className='py-3 px-4'>Payment Status</th>
             <th scope='col' className='py-3 px-4'>Order Status</th> 
+            <th scope='col' className='py-3 px-4'>Date</th>
             <th scope='col' className='py-3 px-4'>Action</th> 
         </tr>
         </thead>
 
         <tbody>
             {
-                [1,2,3,4,5].map((d, i) => <tr key={i}>
+                myOrders.map((d, i) => <tr key={i}>
                  
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>#5455</td>
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>$455</td>
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>pending </td>
-                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>pending</td> 
+                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>#{d._id}</td>
+                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>${d.price}</td>
+                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{d.payment_status} </td>
+                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{d.delivery_status}</td> 
+                <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>{d.date}</td> 
                 <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
                     <div className='flex justify-start items-center gap-4'>
                    
-                    <Link to={`/seller/dashboard/order/details/34`} className='p-[6px] bg-green-500 rounded hover:shadow-lg hover:shadow-green-500/50'> <FaEye/> </Link>
+                    <Link to={`/seller/dashboard/order/details/${d._id}`} className='p-[6px] bg-green-500 rounded hover:shadow-lg hover:shadow-green-500/50'> <FaEye/> </Link>
                    
                     </div>
                     
@@ -72,15 +74,19 @@ const Orders = () => {
     </table> 
     </div>  
 
-    <div className='w-full flex justify-end mt-4 bottom-4 right-4'>
+    {
+        totalOrder <= parPage ? "" : <div className='w-full flex justify-end mt-4 bottom-4 right-4'>
         <Pagination 
             pageNumber = {currentPage}
             setPageNumber = {setCurrentPage}
-            totalItem = {50}
+            totalItem = {totalOrder}
             parPage = {parPage}
             showItem = {3}
         />
         </div>
+    }
+
+    
 
 
            
