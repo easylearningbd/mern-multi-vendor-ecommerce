@@ -10,7 +10,7 @@ const OrderDetails = () => {
     const dispatch = useDispatch() 
     const [status, setStatus] = useState('')
     const { order,errorMessage,successMessage } = useSelector(state => state.order)
-    
+     
     useEffect(() => {
         setStatus(order?.delivery_status)
     },[order])

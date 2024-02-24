@@ -1,6 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { get_seller_order } from '../../store/Reducers/OrderReducer';
 
 const OrderDetails = () => {
+
+    const { orderId } = useParams() 
+    const dispatch = useDispatch() 
+    const { order,errorMessage,successMessage } = useSelector(state => state.order)
+
+    useEffect(() => {
+        dispatch(get_seller_order(orderId))
+    },[orderId])
+
+
     return (
         <div className='px-2 lg:px-7 pt-5'>
         <div className='w-full p-4 bg-[#6a5fdf] rounded-md'>
@@ -17,87 +30,49 @@ const OrderDetails = () => {
 
         <div className='p-4'>
             <div className='flex gap-2 text-lg text-[#d0d2d6]'>
-                <h2>#34344</h2>
-                <span>3 Jan 2024</span> 
+                <h2>#{order._id}</h2>
+                <span>{order.date}</span> 
             </div>
-            
+             
             <div className='flex flex-wrap'>
                 <div className='w-[30%]'>
                     <div className='pr-3 text-[#d0d2d6] text-lg'>
                         <div className='flex flex-col gap-1'>
-                            <h2 className='pb-2 font-semibold'>Deliver To : WareHouse </h2>
+                            <h2 className='pb-2 font-semibold'>Deliver To : {order.shippingInfo} </h2>
                              
                         </div>
             <div className='flex justify-start items-center gap-3'>
                 <h2>Payment Status: </h2>
-                <span className='text-base'>Paid</span>
+                <span className='text-base'>{order.payment_status}</span>
              </div>  
-             <span>Price : $232</span> 
+             <span>Price : ${order.price}</span> 
 
-            <div className='mt-4 flex flex-col gap-4 bg-[#8288ed] rounded-md'>
-                <div className='text-[#d0d2d6]'>
-                    <div className='flex gap-3 text-md'>
-                        <img className='w-[50px] h-[50px]' src="http://localhost:3000/images/category/1.jpg" alt="" />
+         {
+            order?.products?.map((p,i) => <div key={i} className='mt-4 flex flex-col gap-4 bg-[#8288ed] rounded-md'>
+            <div className='text-[#d0d2d6]'> 
+                <div className='flex gap-3 text-md'>
+                    <img className='w-[50px] h-[50px]' src={p.images[0]} alt="" />
 
-                        <div>
-                            <h2>Product Name here </h2>
-                            <p>
-                                <span>Brand : </span>
-                                <span>Easy</span>
-                                <span className='text-lg'>Quantity : 3 </span>
-                            </p>
-                        </div> 
+                    <div>
+                        <h2>{p.name}</h2>
+                        <p>
+                            <span>Brand : </span>
+                            <span>{p.brand}</span>
+                            <span className='text-lg'>Quantity : {p.quantity} </span>
+                        </p>
                     </div> 
-                </div>
-                </div>  
+                </div> 
+            </div>
+            </div>   )
+         }
+            
 
-
-                <div className='mt-4 flex flex-col gap-4 bg-[#8288ed] rounded-md'>
-                <div className='text-[#d0d2d6]'>
-                    <div className='flex gap-3 text-md'>
-                        <img className='w-[50px] h-[50px]' src="http://localhost:3000/images/category/1.jpg" alt="" />
-
-                        <div>
-                            <h2>Product Name here </h2>
-                            <p>
-                                <span>Brand : </span>
-                                <span>Easy</span>
-                                <span className='text-lg'>Quantity : 3 </span>
-                            </p>
-                        </div> 
-                    </div> 
-                </div>
-                </div>  
-
-
-                <div className='mt-4 flex flex-col gap-4 bg-[#8288ed] rounded-md'>
-                <div className='text-[#d0d2d6]'>
-                    <div className='flex gap-3 text-md'>
-                        <img className='w-[50px] h-[50px]' src="http://localhost:3000/images/category/1.jpg" alt="" />
-
-                        <div>
-                            <h2>Product Name here </h2>
-                            <p>
-                                <span>Brand : </span>
-                                <span>Easy</span>
-                                <span className='text-lg'>Quantity : 3 </span>
-                            </p>
-                        </div> 
-                    </div> 
-                </div>
-                </div>  
-
+ 
 
 
                     </div>
                 </div> 
-
-           
-
-
-
-
-
+ 
 
 
             </div>
