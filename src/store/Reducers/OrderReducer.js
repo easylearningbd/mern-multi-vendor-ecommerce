@@ -7,7 +7,7 @@ export const get_admin_orders = createAsyncThunk(
         
         try {
              
-            const {data} = await api.get(`/admin/orders?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`,{withCredentials: true})  
+            const {data} = await api.get(`/admin/orders?page=${page}&searchValue=${searchValue}&parPage=${parPage}`,{withCredentials: true})  
             return fulfillWithValue(data)
         } catch (error) { 
             return rejectWithValue(error.response.data)
@@ -42,6 +42,19 @@ export const get_admin_orders = createAsyncThunk(
     }
 ) 
   // End Method  
+
+  export const get_seller_orders = createAsyncThunk(
+    'orders/get_seller_orders',
+    async({ parPage,page,searchValue,sellerId },{rejectWithValue, fulfillWithValue}) => { 
+        try { 
+            const {data} = await api.get(`/seller/orders/${sellerId}?page=${page}&searchValue=${searchValue}&parPage=${parPage}`,{withCredentials: true})  
+            return fulfillWithValue(data)
+        } catch (error) { 
+            return rejectWithValue(error.response.data)
+        }
+    }
+) 
+  // End Method 
 
  
 export const OrderReducer = createSlice({
