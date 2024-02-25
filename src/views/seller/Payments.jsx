@@ -1,6 +1,8 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { MdCurrencyExchange,MdProductionQuantityLimits } from "react-icons/md"; 
+import { useDispatch, useSelector } from 'react-redux';
 import { FixedSizeList as List } from 'react-window';
+import { get_seller_payment_details } from '../../store/Reducers/PaymentReducer';
 
 function handleOnWheel({ deltaY }) {
     console.log('handleOnWheel',deltaY)
@@ -11,6 +13,9 @@ const outerElementType = forwardRef((props, ref) => (
  ))
 
 const Payments = () => {
+
+    const dispatch = useDispatch()
+    const {userInfo } = useSelector(state => state.auth)
  
     const Row = ({ index, style }) => {
         return (
@@ -26,6 +31,10 @@ const Payments = () => {
             </div>
         )
     }
+
+    useEffect(() => {
+        dispatch(get_seller_payment_details(userInfo._id))
+    },[])
 
 
     return (
