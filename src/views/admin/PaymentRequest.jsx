@@ -1,7 +1,7 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FixedSizeList as List } from 'react-window';
-import { get_payment_request } from '../../store/Reducers/PaymentReducer';
+import { confirm_payment_request, get_payment_request } from '../../store/Reducers/PaymentReducer';
 import moment from 'moment';
 
 function handleOnWheel({ deltaY }) {
@@ -15,11 +15,17 @@ const outerElementType = forwardRef((props, ref) => (
 const PaymentRequest = () => {
 
     const dispatch = useDispatch()
-    const {successMessage, errorMessage, pendingWithdrows } = useSelector(state => state.payment)
+    const {successMessage, errorMessage, pendingWithdrows,loader } = useSelector(state => state.payment)
+    const [paymentId, setPaymentId] = useState('')
 
     useEffect(() => { 
         dispatch(get_payment_request())
     },[])
+
+    const confirm_request = (id) => {
+        setPaymentId(id)
+        dispatch(confirm_payment_request(id))
+    }
 
      
 
@@ -33,7 +39,8 @@ const PaymentRequest = () => {
          </div>
         <div className='w-[25%] p-2 whitespace-nowrap'> {moment(pendingWithdrows[index]?.createdAt).format('LL')} </div>
         <div className='w-[25%] p-2 whitespace-nowrap'>
-            <button className='bg-indigo-500 shadow-lg hover:shadow-indigo-500/50 px-3 py-[2px cursor-pointer text-white rounded-sm text-sm]'>Confirm</button>
+            
+            <button disabled={loader} onClick={() => confirm_request(pendingWithdrows[index]?._id)} className='bg-indigo-500 shadow-lg hover:shadow-indigo-500/50 px-3 py-[2px cursor-pointer text-white rounded-sm text-sm]'>{(loader && paymentId === pendingWithdrows[index]?._id) ? 'loading..' : 'Confirm'}</button>
         </div>
 
             </div>

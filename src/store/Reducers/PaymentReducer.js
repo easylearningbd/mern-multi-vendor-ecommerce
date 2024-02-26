@@ -44,6 +44,20 @@ export const send_withdrowal_request = createAsyncThunk(
 ) 
   // End Method 
 
+  export const confirm_payment_request = createAsyncThunk(
+    'payment/confirm_payment_request',
+    async(paymentId ,{rejectWithValue, fulfillWithValue}) => { 
+        try { 
+            const {data} = await api.post(`/payment/request-confirm`,{paymentId},{withCredentials: true})  
+            return fulfillWithValue(data)
+        } catch (error) {
+            // console.log(error.response.data)
+            return rejectWithValue(error.response.data)
+        }
+    }
+) 
+  // End Method 
+
  
 
  
