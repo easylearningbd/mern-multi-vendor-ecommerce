@@ -74,7 +74,7 @@ export const PaymentReducer = createSlice({
             state.errorMessage = payload.message; 
         })
         .addCase(send_withdrowal_request.fulfilled, (state, { payload }) => {
-            state.loader = true  
+            state.loader = false  
             state.successMessage = payload.message; 
             state.pendingWithdrows = [...state.pendingWithdrows,payload.withdrowal]; 
             state.availableAmount = state.availableAmount - payload.withdrowal.amount; 

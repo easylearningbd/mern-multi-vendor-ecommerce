@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FixedSizeList as List } from 'react-window';
 import { get_seller_payment_details, messageClear, send_withdrowal_request } from '../../store/Reducers/PaymentReducer';
 import toast from 'react-hot-toast';
+import moment from 'moment';
 
 function handleOnWheel({ deltaY }) {
     console.log('handleOnWheel',deltaY)
@@ -39,13 +40,11 @@ const Payments = () => {
         return (
         <div style={style} className='flex text-sm text-white font-medium'>
         <div className='w-[25%] p-2 whitespace-nowrap'>{index + 1}</div>
-        <div className='w-[25%] p-2 whitespace-nowrap'>$3434</div>
+        <div className='w-[25%] p-2 whitespace-nowrap'>${pendingWithdrows[index]?.amount}</div>
         <div className='w-[25%] p-2 whitespace-nowrap'>
-            <span className='py-[1px] px-[5px] bg-slate-300 text-blue-500 rounded-md text-sm'>Pending</span>
+            <span className='py-[1px] px-[5px] bg-slate-300 text-blue-500 rounded-md text-sm'>{pendingWithdrows[index]?.status}</span>
          </div>
-        <div className='w-[25%] p-2 whitespace-nowrap'> 25 Dec 2023 </div>
-        
-
+        <div className='w-[25%] p-2 whitespace-nowrap'> {moment(pendingWithdrows[index]?.createdAt).format('LL')} </div>  
             </div>
         )
     }
@@ -147,7 +146,7 @@ const Payments = () => {
                     style={{ minWidth : '340px'}}
                     className='List'
                     height={350}
-                    itemCount={10}
+                    itemCount={pendingWithdrows.length}
                     itemSize={35}
                     outerElementType={outerElementType}                    
                     >
