@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MdCurrencyExchange,MdProductionQuantityLimits } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6"; 
 import Chart from 'react-apexcharts'
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { get_seller_dashboard_data } from '../../store/Reducers/dashboardReducer';
+import moment from 'moment';
 
 const SellerDashboard = () => {
+
+    const dispatch = useDispatch()
+    const {totalSale,totalOrder,totalProduct,totalSeller,recentOrder,recentMessage} = useSelector(state=> state.dashboard)
+    const {userInfo} = useSelector(state=> state.auth)
+
+
+
+    useEffect(() => {
+        dispatch(get_seller_dashboard_data())
+    }, [])
 
     const state = {
         series : [

@@ -12,6 +12,20 @@ export const get_admin_dashboard_data = createAsyncThunk(
         }
     }
 )
+// End method
+
+export const get_seller_dashboard_data = createAsyncThunk(
+    'dashboard/get_seller_dashboard_data',
+    async( _ ,{rejectWithValue, fulfillWithValue}) => { 
+        try {
+            const {data} = await api.get('/seller/get-dashboard-data',{withCredentials: true})             
+            return fulfillWithValue(data)
+        } catch (error) { 
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+// End method
 
 
   
