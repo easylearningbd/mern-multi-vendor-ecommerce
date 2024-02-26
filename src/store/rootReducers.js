@@ -15,6 +15,6 @@ const rootReducer = {
     chat: chatReducer,
     order: OrderReducer,
     payment: PaymentReducer,
-    dasboard: dashboardReducer,
+    dashboard: dashboardReducer,
 }
 export default rootReducer;
