@@ -30,6 +30,20 @@ export const send_withdrowal_request = createAsyncThunk(
 ) 
   // End Method 
 
+  export const get_payment_request = createAsyncThunk(
+    'payment/get_payment_request',
+    async(_,{rejectWithValue, fulfillWithValue}) => { 
+        try { 
+            const {data} = await api.get(`/payment/request`,{withCredentials: true})  
+            return fulfillWithValue(data)
+        } catch (error) {
+            // console.log(error.response.data)
+            return rejectWithValue(error.response.data)
+        }
+    }
+) 
+  // End Method 
+
  
 
  
@@ -79,6 +93,11 @@ export const PaymentReducer = createSlice({
             state.pendingWithdrows = [...state.pendingWithdrows,payload.withdrowal]; 
             state.availableAmount = state.availableAmount - payload.withdrowal.amount; 
             state.pendingAmount = payload.withdrowal.amount; 
+        })
+
+        .addCase(get_payment_request.fulfilled, (state, { payload }) => {
+            state.pendingWithdrows = payload.withdrowalRequest  
+            
         })
        
 

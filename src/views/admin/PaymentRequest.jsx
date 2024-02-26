@@ -1,5 +1,8 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { FixedSizeList as List } from 'react-window';
+import { get_payment_request } from '../../store/Reducers/PaymentReducer';
+import moment from 'moment';
 
 function handleOnWheel({ deltaY }) {
     console.log('handleOnWheel',deltaY)
@@ -8,20 +11,27 @@ function handleOnWheel({ deltaY }) {
 const outerElementType = forwardRef((props, ref) => (
     <div ref={ref} onWheel={handleOnWheel} {...props} /> 
  ))
-
+ 
 const PaymentRequest = () => {
 
-    const array = [1,2,3,4,5,6,7,8,9,10]
+    const dispatch = useDispatch()
+    const {successMessage, errorMessage, pendingWithdrows } = useSelector(state => state.payment)
+
+    useEffect(() => { 
+        dispatch(get_payment_request())
+    },[])
+
+     
 
     const Row = ({ index, style }) => {
         return (
         <div style={style} className='flex text-sm text-white font-medium'>
         <div className='w-[25%] p-2 whitespace-nowrap'>{index + 1}</div>
-        <div className='w-[25%] p-2 whitespace-nowrap'>$3434</div>
+        <div className='w-[25%] p-2 whitespace-nowrap'>${pendingWithdrows[index]?.amount}</div>
         <div className='w-[25%] p-2 whitespace-nowrap'>
-            <span className='py-[1px] px-[5px] bg-slate-300 text-blue-500 rounded-md text-sm'>Pending</span>
+            <span className='py-[1px] px-[5px] bg-slate-300 text-blue-500 rounded-md text-sm'>{pendingWithdrows[index]?.status}</span>
          </div>
-        <div className='w-[25%] p-2 whitespace-nowrap'> 25 Dec 2023 </div>
+        <div className='w-[25%] p-2 whitespace-nowrap'> {moment(pendingWithdrows[index]?.createdAt).format('LL')} </div>
         <div className='w-[25%] p-2 whitespace-nowrap'>
             <button className='bg-indigo-500 shadow-lg hover:shadow-indigo-500/50 px-3 py-[2px cursor-pointer text-white rounded-sm text-sm]'>Confirm</button>
         </div>
@@ -52,7 +62,7 @@ const PaymentRequest = () => {
                     style={{ minWidth : '340px'}}
                     className='List'
                     height={350}
-                    itemCount={100}
+                    itemCount={pendingWithdrows.length}
                     itemSize={35}
                     outerElementType={outerElementType}                    
                     >
