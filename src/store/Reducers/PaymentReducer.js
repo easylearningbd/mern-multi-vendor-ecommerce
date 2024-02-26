@@ -15,6 +15,21 @@ export const get_seller_payment_details = createAsyncThunk(
 ) 
   // End Method 
 
+
+export const send_withdrowal_request = createAsyncThunk(
+    'payment/send_withdrowal_request',
+    async( info,{rejectWithValue, fulfillWithValue}) => { 
+        try { 
+            const {data} = await api.post(`/payment/withdrowal-request`,info,{withCredentials: true})  
+            return fulfillWithValue(data)
+        } catch (error) {
+            // console.log(error.response.data)
+            return rejectWithValue(error.response.data)
+        }
+    }
+) 
+  // End Method 
+
  
 
  

@@ -1,8 +1,9 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { MdCurrencyExchange,MdProductionQuantityLimits } from "react-icons/md"; 
 import { useDispatch, useSelector } from 'react-redux';
 import { FixedSizeList as List } from 'react-window';
-import { get_seller_payment_details } from '../../store/Reducers/PaymentReducer';
+import { get_seller_payment_details, send_withdrowal_request } from '../../store/Reducers/PaymentReducer';
+import toast from 'react-hot-toast';
 
 function handleOnWheel({ deltaY }) {
     console.log('handleOnWheel',deltaY)
@@ -18,6 +19,21 @@ const Payments = () => {
     const {userInfo } = useSelector(state => state.auth)
     const {successMessage, errorMessage,loader,pendingWithdrows,   successWithdrows, totalAmount, withdrowAmount, pendingAmount,
     availableAmount, } = useSelector(state => state.payment)
+
+    const [amount,setAmount] = useState(0)
+
+
+    const sendRequest = (e) => {
+        e.preventDefault()
+        if (availableAmount - amount > 10) {
+            dispatch(send_withdrowal_request({amount, sellerId: userInfo._id }))
+            setAmount(0)
+        } else {
+            toast.error('Insufficient Balance')
+        }
+    }
+ 
+
  
     const Row = ({ index, style }) => {
         return (
@@ -93,17 +109,17 @@ const Payments = () => {
             </div>
 
         <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-2 pb-4'>
-            <div className='bg-[#6a5fdf] text-[#d0d2d6] rounded-md p-5'>
-                <h2 className='text-lg'>Send Request</h2>
-                <div className='pt-5 mb-5'>
-                    <form>
-                        <div className='flex gap-3 flex-wrap'>
-                            <input min='0' type="number" className='px-3 py-2 md:w-[75%] focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]' name='amount' />
-                            <button className='bg-red-500  hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2'>Submit</button>
- 
-                        </div>
-                    </form> 
-                </div>
+<div className='bg-[#6a5fdf] text-[#d0d2d6] rounded-md p-5'>
+    <h2 className='text-lg'>Send Request</h2>
+    <div className='pt-5 mb-5'>
+        <form onSubmit={sendRequest}>
+            <div className='flex gap-3 flex-wrap'>
+                <input onChange={(e) => setAmount(e.target.value)} value={amount} min='0' type="number" className='px-3 py-2 md:w-[75%] focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]' name='amount' />
+                <button disabled={loader} className='bg-red-500  hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2'>{loader ? 'loading..' : 'Submit'}</button>
+
+            </div>
+        </form> 
+    </div>
 
                 <div>
                     <h2 className='text-lg pb-4'>Pending Request </h2>
