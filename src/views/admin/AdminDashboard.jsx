@@ -213,13 +213,13 @@ const AdminDashboard = () => {
 
         <tbody>
             {
-                [1,2,3,4,5].map((d, i) => <tr key={i}>
-                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>#34344</td>
-                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>$454</td>
-                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>Pending</td>
-                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>Pending</td>
+                recentOrder.map((d, i) => <tr key={i}>
+                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>#{d._id}</td>
+                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>${d.price}</td>
+                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>{d.payment_status}</td>
+                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>{d.delivery_status}</td>
                 <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>
-                    <Link>View</Link> </td>
+                    <Link to={`/admin/dashboard/order/details/${d._id}`}>View</Link> </td>
             </tr> )
             }
 
