@@ -57,6 +57,14 @@ export const dashboardReducer = createSlice({
             state.recentOrder = payload.recentOrders
             state.recentMessage = payload.messages
         })
+        .addCase(get_seller_dashboard_data.fulfilled, (state, { payload }) => {
+            state.totalSale = payload.totalSale
+            state.totalOrder = payload.totalOrder
+            state.totalProduct = payload.totalProduct 
+            state.totalPendingOrder = payload.totalPendingOrder
+            state.recentOrder = payload.recentOrders
+            state.recentMessage = payload.messages
+        })
  
     }
 
