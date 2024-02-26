@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useState } from 'react';
 import { MdCurrencyExchange,MdProductionQuantityLimits } from "react-icons/md"; 
 import { useDispatch, useSelector } from 'react-redux';
 import { FixedSizeList as List } from 'react-window';
-import { get_seller_payment_details, send_withdrowal_request } from '../../store/Reducers/PaymentReducer';
+import { get_seller_payment_details, messageClear, send_withdrowal_request } from '../../store/Reducers/PaymentReducer';
 import toast from 'react-hot-toast';
 
 function handleOnWheel({ deltaY }) {
@@ -53,6 +53,17 @@ const Payments = () => {
     useEffect(() => {
         dispatch(get_seller_payment_details(userInfo._id))
     },[])
+
+    useEffect(() => {
+        if (successMessage) {
+            toast.success(successMessage)
+            dispatch(messageClear())
+        }
+        if (errorMessage) {
+            toast.error(errorMessage)
+            dispatch(messageClear())
+        }
+    },[successMessage,errorMessage])
 
 
     return (

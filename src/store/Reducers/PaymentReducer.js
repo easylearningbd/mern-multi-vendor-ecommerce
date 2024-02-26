@@ -65,6 +65,21 @@ export const PaymentReducer = createSlice({
             state.withdrowAmount = payload.withdrowAmount;
             state.pendingAmount = payload.availableAmount; 
         })
+
+        .addCase(send_withdrowal_request.pending, (state, { payload }) => {
+            state.loader = true  
+        })
+        .addCase(send_withdrowal_request.rejected, (state, { payload }) => {
+            state.loader = false  
+            state.errorMessage = payload.message; 
+        })
+        .addCase(send_withdrowal_request.fulfilled, (state, { payload }) => {
+            state.loader = true  
+            state.successMessage = payload.message; 
+            state.pendingWithdrows = [...state.pendingWithdrows,payload.withdrowal]; 
+            state.availableAmount = state.availableAmount - payload.withdrowal.amount; 
+            state.pendingAmount = payload.withdrowal.amount; 
+        })
        
 
     }
