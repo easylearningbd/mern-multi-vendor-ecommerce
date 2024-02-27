@@ -84,6 +84,19 @@ export const bannerReducer = createSlice({
         .addCase(get_banner.fulfilled, (state, { payload }) => {            
             state.banner = payload.banner; 
         })
+
+        .addCase(update_banner.pending, (state, { payload }) => {
+            state.loader = true; 
+        })
+        .addCase(update_banner.rejected, (state, { payload }) => {
+            state.loader = false; 
+            state.errorMessage = payload.error; 
+        })
+        .addCase(update_banner.fulfilled, (state, { payload }) => {
+            state.loader = false; 
+            state.successMessage = payload.message; 
+            state.banner = payload.banner; 
+        })
         
 
     }
