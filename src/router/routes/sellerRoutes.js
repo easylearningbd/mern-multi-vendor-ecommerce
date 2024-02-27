@@ -1,4 +1,4 @@
-import { lazy } from "react";             
+import { lazy } from "react";            
 
 const SellerDashboard = lazy(()=> import('../../views/seller/SellerDashboard'))   
 const AddProduct = lazy(()=> import('../../views/seller/AddProduct'))   
@@ -13,6 +13,7 @@ const EditProduct = lazy(()=> import('../../views/seller/EditProduct'))
 const OrderDetails = lazy(()=> import('../../views/seller/OrderDetails'))
 const Pending = lazy(()=> import('./../../views/Pending')) 
 const Deactive = lazy(()=> import('./../../views/Deactive')) 
+const AddBanner = lazy(()=> import('../../views/seller/AddBanner')) 
 
 export const sellerRoutes = [
     
@@ -86,7 +87,7 @@ export const sellerRoutes = [
         role : 'seller',
         status : 'active'
     },
-    {
+    { 
         path: '/seller/dashboard/chat-customer',
         element : <SellerToCustomer/>,
         role : 'seller',
@@ -97,6 +98,12 @@ export const sellerRoutes = [
         element : <Profile/>,
         role : 'seller',
         visibility : ['active','deactive','pending']
+    },
+    {
+        path: '/seller/dashboard/add-banner/:productId',
+        element : <AddBanner/>,
+        role : 'seller',
+        status : 'active'
     }
 
 ]
