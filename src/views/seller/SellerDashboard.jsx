@@ -7,11 +7,12 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { get_seller_dashboard_data } from '../../store/Reducers/dashboardReducer';
 import moment from 'moment';
+import customer from '../../assets/demo.jpg'
 
 const SellerDashboard = () => {
 
     const dispatch = useDispatch()
-    const {totalSale,totalOrder,totalProduct,totalSeller,recentOrder,recentMessage} = useSelector(state=> state.dashboard)
+    const {totalSale,totalOrder,totalProduct,totalPendingOrder,recentOrder,recentMessage} = useSelector(state=> state.dashboard)
     const {userInfo} = useSelector(state=> state.auth)
 
 
@@ -93,7 +94,7 @@ const SellerDashboard = () => {
                 
                 <div className='flex justify-between items-center p-5 bg-[#fae8e8] rounded-md gap-3'>
                     <div className='flex flex-col justify-start items-start text-[#5c5a5a]'>
-                        <h2 className='text-3xl font-bold'>$3434</h2>
+                        <h2 className='text-3xl font-bold'>${totalSale}</h2>
                         <span className='text-md font-medium'>Total Salse</span>
                     </div>
 
@@ -105,7 +106,7 @@ const SellerDashboard = () => {
 
                 <div className='flex justify-between items-center p-5 bg-[#fde2ff] rounded-md gap-3'>
                     <div className='flex flex-col justify-start items-start text-[#5c5a5a]'>
-                        <h2 className='text-3xl font-bold'>50</h2>
+                        <h2 className='text-3xl font-bold'>{totalProduct}</h2>
                         <span className='text-md font-medium'>Products</span>
                     </div>
 
@@ -117,7 +118,7 @@ const SellerDashboard = () => {
 
                 <div className='flex justify-between items-center p-5 bg-[#e9feea] rounded-md gap-3'>
                     <div className='flex flex-col justify-start items-start text-[#5c5a5a]'>
-                        <h2 className='text-3xl font-bold'>10</h2>
+                        <h2 className='text-3xl font-bold'>{totalOrder}</h2>
                         <span className='text-md font-medium'>Orders</span>
                     </div>
 
@@ -129,7 +130,7 @@ const SellerDashboard = () => {
 
                 <div className='flex justify-between items-center p-5 bg-[#ecebff] rounded-md gap-3'>
                     <div className='flex flex-col justify-start items-start text-[#5c5a5a]'>
-                        <h2 className='text-3xl font-bold'>1</h2>
+                        <h2 className='text-3xl font-bold'>{totalPendingOrder}</h2>
                         <span className='text-md font-medium'>Pending Orders</span>
                     </div>
 
@@ -159,49 +160,27 @@ const SellerDashboard = () => {
 
         <div className='flex flex-col gap-2 pt-6 text-[#d0d2d6]'>
             <ol className='relative border-1 border-slate-600 ml-4'>
-                <li className='mb-3 ml-6'>
-                    <div className='flex absolute -left-5 shadow-lg justify-center items-center w-10 h-10 p-[6px] bg-[#4c7fe2] rounded-full z-10'>
-                    <img className='w-full rounded-full h-full shadow-lg' src="http://localhost:3000/images/admin.jpg" alt="" /></div>
-                    <div className='p-3 bg-slate-800 rounded-lg border border-slate-600 shadow-sm'>
-                    <div className='flex justify-between items-center mb-2'>
-                <Link className='text-md font-normal'>Seller</Link>
-                <time className='mb-1 text-sm font-normal sm:order-last sm:mb-0'> 2 day ago</time>
-                    </div>
-                    <div className='p-2 text-xs font-normal bg-slate-700 rounded-lg border border-slate-800'>
-                        How Are you
-                    </div>
-                    </div>
-                </li>
+               
+    {
+        recentMessage.map((m, i) => <li className='mb-3 ml-6'>
+        <div className='flex absolute -left-5 shadow-lg justify-center items-center w-10 h-10 p-[6px] bg-[#4c7fe2] rounded-full z-10'>
+        {
+            m.senderId === userInfo._id ? <img className='w-full rounded-full h-full shadow-lg' src={userInfo.image} alt="" /> : <img className='w-full rounded-full h-full shadow-lg' src={customer} alt="" />
+        } 
+        </div>
+        <div className='p-3 bg-slate-800 rounded-lg border border-slate-600 shadow-sm'>
+        <div className='flex justify-between items-center mb-2'>
+    <Link className='text-md font-normal'>{m.senderName}</Link>
+    <time className='mb-1 text-sm font-normal sm:order-last sm:mb-0'> {moment(m.createdAt).startOf('hour').fromNow()}</time>
+        </div>
+        <div className='p-2 text-xs font-normal bg-slate-700 rounded-lg border border-slate-800'>
+            {m.message}
+        </div>
+        </div>
+    </li>)
+        }
 
-
-                <li className='mb-3 ml-6'>
-                    <div className='flex absolute -left-5 shadow-lg justify-center items-center w-10 h-10 p-[6px] bg-[#4c7fe2] rounded-full z-10'>
-                    <img className='w-full rounded-full h-full shadow-lg' src="http://localhost:3000/images/admin.jpg" alt="" /></div>
-                    <div className='p-3 bg-slate-800 rounded-lg border border-slate-600 shadow-sm'>
-                    <div className='flex justify-between items-center mb-2'>
-                <Link className='text-md font-normal'>Admin</Link>
-                <time className='mb-1 text-sm font-normal sm:order-last sm:mb-0'> 2 day ago</time>
-                    </div>
-                    <div className='p-2 text-xs font-normal bg-slate-700 rounded-lg border border-slate-800'>
-                        How Are you
-                    </div>
-                    </div>
-                </li>
-
-
-                <li className='mb-3 ml-6'>
-                    <div className='flex absolute -left-5 shadow-lg justify-center items-center w-10 h-10 p-[6px] bg-[#4c7fe2] rounded-full z-10'>
-                    <img className='w-full rounded-full h-full shadow-lg' src="http://localhost:3000/images/admin.jpg" alt="" /></div>
-                    <div className='p-3 bg-slate-800 rounded-lg border border-slate-600 shadow-sm'>
-                    <div className='flex justify-between items-center mb-2'>
-                <Link className='text-md font-normal'>Customer</Link>
-                <time className='mb-1 text-sm font-normal sm:order-last sm:mb-0'> 2 day ago</time>
-                    </div>
-                    <div className='p-2 text-xs font-normal bg-slate-700 rounded-lg border border-slate-800'>
-                        How Are you
-                    </div>
-                    </div>
-                </li>
+ 
 
             </ol>
 
@@ -233,13 +212,13 @@ const SellerDashboard = () => {
 
         <tbody>
             {
-                [1,2,3,4,5].map((d, i) => <tr key={i}>
-                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>#34344</td>
-                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>$454</td>
-                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>Pending</td>
-                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>Pending</td>
+                recentOrder.map((d, i) => <tr key={i}>
+                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>#{d._id}</td>
+                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>${d.price}</td>
+                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>{d.payment_status}</td>
+                <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>{d.delivery_status}</td>
                 <td scope='row' className='py-3 px-4 font-medium whitespace-nowrap'>
-                    <Link>View</Link> </td>
+                    <Link to={`/seller/dashboard/order/details/${d._id}`}>View</Link> </td>
             </tr> )
             }
 
