@@ -15,6 +15,22 @@ export const add_banner = createAsyncThunk(
 )
 
   // End Method 
+
+
+  export const get_banner = createAsyncThunk(
+    'banner/get_banner',
+    async(productId ,{rejectWithValue, fulfillWithValue}) => { 
+        try {
+             
+            const {data} = await api.get(`/banner/get/${productId}`,{withCredentials: true})  
+            return fulfillWithValue(data)
+        } catch (error) { 
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+
+  // End Method 
  
  
 export const bannerReducer = createSlice({
@@ -47,6 +63,10 @@ export const bannerReducer = createSlice({
         .addCase(add_banner.fulfilled, (state, { payload }) => {
             state.loader = false; 
             state.successMessage = payload.message; 
+            state.banner = payload.banner; 
+        })
+
+        .addCase(get_banner.fulfilled, (state, { payload }) => {            
             state.banner = payload.banner; 
         })
         
