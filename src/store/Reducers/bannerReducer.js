@@ -35,12 +35,20 @@ export const bannerReducer = createSlice({
 
     },
     extraReducers: (builder) => {
-        // builder
+        builder
           
-        // .addCase(get_seller_request.fulfilled, (state, { payload }) => {
-        //     state.sellers = payload.sellers;
-        //     state.totalSeller = payload.totalSeller; 
-        // })
+        .addCase(add_banner.pending, (state, { payload }) => {
+            state.loader = true; 
+        })
+        .addCase(add_banner.rejected, (state, { payload }) => {
+            state.loader = false; 
+            state.errorMessage = payload.error; 
+        })
+        .addCase(add_banner.fulfilled, (state, { payload }) => {
+            state.loader = false; 
+            state.successMessage = payload.message; 
+            state.banner = payload.banner; 
+        })
         
 
     }

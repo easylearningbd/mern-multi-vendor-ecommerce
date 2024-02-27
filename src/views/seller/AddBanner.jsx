@@ -1,18 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaRegImage } from "react-icons/fa";
 import { PropagateLoader } from 'react-spinners';
 import { overrideStyle } from '../../utils/utils';
 import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { add_banner } from '../../store/Reducers/bannerReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { add_banner,messageClear } from '../../store/Reducers/bannerReducer';
+import toast from 'react-hot-toast';
 
 const AddBanner = () => {
-    const loader = false
+    
     const {productId} = useParams()
     const dispatch = useDispatch()
 
+    const { loader,successMessage,errorMessage } = useSelector(state => state.banner)
+
     const [imageShow, setImageShow] = useState('')
     const [image, setImage] = useState('')
+
+    useEffect(() => {
+        if (successMessage) {
+            toast.success(successMessage)
+            dispatch(messageClear())
+        }
+        if (errorMessage) {
+            toast.error(errorMessage)
+            dispatch(messageClear())
+        }
+    },[successMessage,errorMessage])
 
     const imageHandle = (e) => {
         const files = e.target.files 
