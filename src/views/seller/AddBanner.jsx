@@ -4,7 +4,7 @@ import { PropagateLoader } from 'react-spinners';
 import { overrideStyle } from '../../utils/utils';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { add_banner,get_banner,messageClear } from '../../store/Reducers/bannerReducer';
+import { add_banner,get_banner,messageClear, update_banner } from '../../store/Reducers/bannerReducer';
 import toast from 'react-hot-toast';
 
 const AddBanner = () => {
@@ -48,6 +48,9 @@ const AddBanner = () => {
 
     const update = (e) => {
         e.preventDefault()
+        const formData = new FormData()
+        formData.append('mainban',image)
+        dispatch(update_banner({info:formData,bannerId: banner._id}))
     }
 
     useEffect(() => {

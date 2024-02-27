@@ -31,6 +31,21 @@ export const add_banner = createAsyncThunk(
 )
 
   // End Method 
+
+  export const update_banner = createAsyncThunk(
+    'banner/update_banner',
+    async({bannerId,info} ,{rejectWithValue, fulfillWithValue}) => { 
+        try {
+             
+            const {data} = await api.put(`/banner/update/${bannerId}`,info,{withCredentials: true})  
+            return fulfillWithValue(data)
+        } catch (error) { 
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+
+  // End Method 
  
  
 export const bannerReducer = createSlice({
