@@ -128,7 +128,14 @@ export const categoryReducer = createSlice({
         .addCase(updateCategory.rejected, (state, { payload }) => {
             state.loader = false;
             state.errorMessage = payload.error; 
-             
+        })
+
+        .addCase(deleteCategory.fulfilled, (state, action) => {
+            state.categorys = state.categorys.filter(cat => cat._id !== action.meta.arg);
+            state.successMessage = action.payload.message; 
+        })
+        .addCase(deleteCategory.rejected, (state,action) => { 
+            state.errorMessage = action.payload; 
         })
  
 
