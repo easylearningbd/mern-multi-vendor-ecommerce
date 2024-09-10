@@ -7,7 +7,7 @@ import { FaImage } from "react-icons/fa";
 import { IoMdCloseCircle } from "react-icons/io";
 import { PropagateLoader } from 'react-spinners';
 import { overrideStyle } from '../../utils/utils';
-import { categoryAdd, messageClear,get_category,updateCategory } from '../../store/Reducers/categoryReducer';
+import { categoryAdd, messageClear,get_category,updateCategory,deleteCategory } from '../../store/Reducers/categoryReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import Search from '../components/Search';
@@ -102,6 +102,13 @@ const Category = () => {
         setShow(true)
     }
 
+    const handleDelete = (id) => {
+        if (window.confirm('Are you sure to delete category?')) {
+            console.log("delete category id",id);
+            dispatch(deleteCategory(id));
+        }
+    }
+
     return (
         <div className='px-2 lg:px-7 pt-5'>
 
@@ -143,7 +150,7 @@ const Category = () => {
                 <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
                     <div className='flex justify-start items-center gap-4'>
                     <Link className='p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50' onClick={() => handleEdit(d)} > <FaEdit/> </Link> 
-                    <Link className='p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50' > <FaTrash/> </Link> 
+                    <Link className='p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50' onClick={() => handleDelete(d._id)}  > <FaTrash/> </Link> 
                     </div>
                     
                     </td>

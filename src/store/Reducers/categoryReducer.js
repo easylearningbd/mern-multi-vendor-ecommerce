@@ -60,6 +60,22 @@ export const get_category = createAsyncThunk(
 )
 
 // End Method 
+
+export const deleteCategory = createAsyncThunk(
+    'category/deleteCategory',
+    async(id,{rejectWithValue }) => {
+        
+        try { 
+             
+            const response = await api.delete(`/category/${id}`);  
+            return response.data;
+        } catch (error) {  
+            return rejectWithValue(error.response.data.message)
+        }
+    }
+)
+
+// End Method 
  
 export const categoryReducer = createSlice({
     name: 'category',
