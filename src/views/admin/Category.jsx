@@ -68,6 +68,8 @@ const Category = () => {
                 image: ''
             }) 
             setImage('')
+            setIsEdit(false)
+            setEditId(null)
 
         }
         if (errorMessage) {
@@ -76,7 +78,7 @@ const Category = () => {
         }
         
 
-    },[successMessage,errorMessage])
+    },[successMessage,errorMessage,dispatch])
    
     useEffect(() => {
         const obj = {
@@ -140,8 +142,8 @@ const Category = () => {
                  
                 <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
                     <div className='flex justify-start items-center gap-4'>
-                    <Link className='p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50'> <FaEdit/> </Link> 
-                    <Link className='p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50' onClick={() => handleEdit(d)} > <FaTrash/> </Link> 
+                    <Link className='p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50' onClick={() => handleEdit(d)} > <FaEdit/> </Link> 
+                    <Link className='p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50' > <FaTrash/> </Link> 
                     </div>
                     
                     </td>

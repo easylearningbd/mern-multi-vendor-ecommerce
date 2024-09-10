@@ -49,7 +49,7 @@ export const get_category = createAsyncThunk(
             if (image) {
                 formData.append('image', image)
             } 
-            const {data} = await api.put(`/category-update/{$id}`,formData,{withCredentials: true}) 
+            const {data} = await api.put(`/category-update/${id}`,formData,{withCredentials: true}) 
             // console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
@@ -96,6 +96,22 @@ export const categoryReducer = createSlice({
         .addCase(get_category.fulfilled, (state, { payload }) => {
             state.totalCategory = payload.totalCategory;
             state.categorys = payload.categorys;
+             
+        })
+
+        .addCase(updateCategory.fulfilled, (state, { payload }) => {
+            state.loader = false;
+            state.successMessage = payload.message 
+            const index = state.categorys.findIndex((cat) => cat._id === payload.category._id);
+            if (index !== -1) {
+                state.categorys[index] = payload.category;
+            }
+             
+        })
+
+        .addCase(updateCategory.rejected, (state, { payload }) => {
+            state.loader = false;
+            state.errorMessage = payload.error; 
              
         })
  
