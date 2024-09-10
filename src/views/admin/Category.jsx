@@ -11,7 +11,7 @@ import { categoryAdd, messageClear,get_category } from '../../store/Reducers/cat
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import Search from '../components/Search';
-
+ 
 const Category = () => {
 
     const dispatch = useDispatch()
@@ -24,6 +24,8 @@ const Category = () => {
     const [parPage, setParPage] = useState(5)
     const [show, setShow] =  useState(false)
     const [imageShow, setImage] = useState('')
+    const [isEdit, setIsEdit] = useState(false)
+    const [editId, setEditId] = useState(null)
 
     const [state, setState] = useState({
 
@@ -81,6 +83,18 @@ const Category = () => {
 
     },[searchValue, currentPage,parPage])
 
+  /// Handle Edit Button 
+    const handleEdit = (category) => {
+        setState({
+            name: category.name,
+            image: category.image
+        })
+        setImage(category.image)
+        setEditId(category._id)
+        setIsEdit(true)
+        setShow(true)
+    }
+
     return (
         <div className='px-2 lg:px-7 pt-5'>
 
@@ -122,7 +136,7 @@ const Category = () => {
                 <td scope='row' className='py-1 px-4 font-medium whitespace-nowrap'>
                     <div className='flex justify-start items-center gap-4'>
                     <Link className='p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50'> <FaEdit/> </Link> 
-                    <Link className='p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50'> <FaTrash/> </Link> 
+                    <Link className='p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50' onClick={() => handleEdit(d)} > <FaTrash/> </Link> 
                     </div>
                     
                     </td>

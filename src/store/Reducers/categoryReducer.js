@@ -5,7 +5,7 @@ export const categoryAdd = createAsyncThunk(
     'category/categoryAdd',
     async({ name,image },{rejectWithValue, fulfillWithValue}) => {
         
-        try {
+        try { 
             const formData = new FormData()
             formData.append('name', name)
             formData.append('image', image)
