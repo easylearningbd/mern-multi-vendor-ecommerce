@@ -126,6 +126,7 @@ const EditProduct = () => {
                 price: state.price,
                 brand: state.brand,
                 stock: state.stock,
+                category:category,
                 productId: productId
         }
         dispatch(update_product(obj))
